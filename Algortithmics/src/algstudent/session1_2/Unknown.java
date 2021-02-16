@@ -28,6 +28,5 @@ public class Unknown {
 			System.out.println(c + "**n=" + n + "**TIME=" + (t2 - t1)
 					+ "**nTimes=" + nTimes);
 		} // for
-
 	} // main
 } // class
