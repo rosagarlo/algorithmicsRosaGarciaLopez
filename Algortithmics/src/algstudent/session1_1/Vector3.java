@@ -1,4 +1,4 @@
-package algstudent.session1;
+package algstudent.session1_1;
 
 public class Vector3 {
 
