@@ -10,6 +10,6 @@ public class Vector2 {
 		long end = System.currentTimeMillis();
 		long finalTime = (end - start);
 		System.out.println("The time taken to execute " + n
-					+ " repetitions was " + finalTime + " milliseconds");
+				+ " repetitions was " + finalTime + " milliseconds");
 	}
 }

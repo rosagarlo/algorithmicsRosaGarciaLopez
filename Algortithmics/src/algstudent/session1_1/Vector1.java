@@ -53,7 +53,7 @@ public class Vector1 {
 	  for (int i=0; i<n; i++)
 	     System.out.println ("ELEMENT " + i + " = " + a[i]);
 	  System.out.println();
-	}    
+	}
 	
 	/**
 	 * This method adds the elements of a vector and returns it
@@ -66,7 +66,7 @@ public class Vector1 {
 	  for (int i=0; i<n; i++) 
 		  s = s+a[i];
 	  return s;
-	} 
+	}
 
 	/** 	
 	 * This method calculates the maximum and its position 
@@ -83,6 +83,6 @@ public class Vector1 {
 	    	m[0] = i;
 	     	m[1] = a[i];
 	     }
-	} 
+	}
 
 }

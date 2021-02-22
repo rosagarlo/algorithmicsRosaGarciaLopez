@@ -1,5 +1,11 @@
 package algstudent.session0;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class MatrixOperations {
@@ -13,7 +19,7 @@ public class MatrixOperations {
 	 * random values must be parameterizable between a maximum (max) and a
 	 * minimum (min) value.
 	 * 
-	 * @param n the size of the matrix.
+	 * @param n   the size of the matrix.
 	 * @param min
 	 * @param max
 	 */
@@ -22,9 +28,13 @@ public class MatrixOperations {
 			throw new RuntimeException("The size cannot be less than zero.");
 		}
 		if (min < 0) {
-			throw new RuntimeException("The size cannot be less than zero.");
+			throw new RuntimeException("The minimum cannot be less than zero.");
+		}
+		if (max < 0) {
+			throw new RuntimeException("The maximum cannot be less than zero.");
 		}
 		size = n;
+		matrix = new int[n][n];
 		fillMatrix(min, max);
 	}
 
@@ -44,9 +54,47 @@ public class MatrixOperations {
 	 * will be separated by a tabulator.
 	 * 
 	 * @param String with the name of the file.
+	 * @throws FileNotFoundException
 	 */
 	public MatrixOperations(String fileName) {
-		
+		try {
+			readFile(fileName);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	private void readFile(String fileName) throws FileNotFoundException {
+		List<String> res = new ArrayList<>();
+
+		BufferedReader in = new BufferedReader(new FileReader(fileName));
+		try {
+			try {
+				String line;
+				while ((line = in.readLine()) != null) {
+					res.add(line);
+				}
+			} finally {
+				in.close();
+			}
+		} catch (FileNotFoundException e) {
+			throw e;
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+		int count = 1;
+		String[][] aux = null;
+		for (String string : res) {
+			aux = new String[res.size()][res.size()];
+			aux[count] = string.split("\t");
+			count++;
+		}
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = 0; j < matrix[i].length; j++) {
+				matrix[i][j] = Integer.parseInt(aux[i][j]);
+			}
+		}
 	}
 
 	/**
@@ -60,7 +108,16 @@ public class MatrixOperations {
 	 * Prints in the console all the matrix elements.
 	 */
 	public void write() {
-		
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = 0; j < matrix[i].length; j++) {
+				if (matrix[i][j] < 10)
+					System.out.print(matrix[i][j] + "  ");
+				else
+					System.out.print(matrix[i][j] + " ");
+			}
+			System.out.println("");
+		}
+		System.out.println("");
 	}
 
 	/**
@@ -74,9 +131,9 @@ public class MatrixOperations {
 		int result = 0;
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
-				if (i == j){
+				if (i == j) {
 					result += matrix[i][j];
-                }
+				}
 			}
 		}
 		return result;
@@ -109,6 +166,28 @@ public class MatrixOperations {
 	 * @param j
 	 */
 	public void travelPath(int i, int j) {
-		
+		if (i < 0 || j < 0) {
+			throw new IllegalArgumentException(
+					"Parameters must not be less than zero.");
+		} else if (i >= matrix.length || j >= matrix.length) {
+			throw new IllegalArgumentException("Parameters are out of bounds.");
+		}
+		int auxI = i;
+		int auxJ = j;
+		switch (matrix[i][j]) {
+		case 1:
+			auxI--;
+		case 2:
+			auxJ++;
+		case 3:
+			auxI++;
+		case 4:
+			auxJ--;
+		}
+		matrix[i][j] = -1;
+		while (auxI < getSize() || auxJ < getSize()
+				|| matrix[auxI][auxJ] != -1) {
+			travelPath(auxI, auxJ);
+		}
 	}
 }
