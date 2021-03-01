@@ -10,12 +10,17 @@ public class Bubble extends Vector {
 
 	@Override
 	public void sort() {
-		// TODO: Implement this algorithm
-	}  
-	
+		for (int i = 0; i < elements.length; i++) {
+			for (int j = 0; j < elements.length - i - 1; j++) {
+				if (elements[j] > elements[j + 1]) {
+					super.interchange(j, j + 1);
+				}
+			}
+		}
+	}
+
 	@Override
 	public String getName() {
 		return "Bubble";
-	} 
-} 
-
+	}
+}
