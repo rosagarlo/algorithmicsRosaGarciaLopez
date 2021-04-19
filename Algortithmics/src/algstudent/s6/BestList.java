@@ -102,16 +102,18 @@ public class BestList {
 	}
 
 	public void computeBlocks() {
-		Collections.sort(songs, new SortByScore());
+		Collections.sort(songs, new SortByScore()); // sort by descending order
+													// the songs
 		bestListUtil(songs.get(0));
 	}
 
 	private void bestListUtil(Song song) {
 		counter++;
-		if (totalDuration >= maxDuration * 2 && sol.size() >= numberOfSongs-1) {
-			sol.remove(song);
+		if (totalDuration >= maxDuration * 2
+				&& sol.size() >= numberOfSongs - 1) {
+			sol.remove(song); // delete the last song that stops the algorithm
 			totalDuration -= song.getDuration();
-			fillBlocks(sol, song);
+			fillBlocks(sol);
 			return;
 		} else {
 			for (int i = 0; i < songs.size(); i++) {
@@ -125,7 +127,8 @@ public class BestList {
 						sol.remove(song);
 						totalDuration -= song.getDuration();
 						counter++;
-					} else if (sol.size() < numberOfSongs && !sol.contains(songs.get(i))
+					} else if (sol.size() < numberOfSongs
+							&& !sol.contains(songs.get(i))
 							&& totalDuration < maxDuration) {
 						counter++;
 						sol.add(songs.get(i));
@@ -136,7 +139,13 @@ public class BestList {
 		}
 	}
 
-	private void fillBlocks(List<Song> list, Song song) {
+	/**
+	 * Fills the two blocks that contain the songs
+	 * 
+	 * @param list
+	 * @param song
+	 */
+	private void fillBlocks(List<Song> list) {
 		blockA = new ArrayList<>();
 		blockB = new ArrayList<>();
 		totalScore = 0;
